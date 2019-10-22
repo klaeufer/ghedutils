@@ -1,0 +1,51 @@
+#! /bin/bash
+
+NAME="$1"
+if [ -z "$NAME" ]; then
+    echo "Usage: $0 name"
+    echo "Clones and/or pulls matching repositories into current directory"
+    exit 2
+fi
+
+if [ -z "$GITHUB_USERID" ]; then
+    echo "The environment variable GITHUB_USERID is not set."
+    echo "Please set and re-run this script."
+    exit 1
+fi
+
+if [ -z "$GITHUB_ACCESS_TOKEN" ]; then
+    echo "The environment variable GITHUB_ACCESS_TOKEN is not set."
+    echo "Please set and re-run this script."
+    exit 1
+fi
+
+REPOS=/tmp/repos$$.txt
+NUM_REPOS=0
+NEW_NUM_REPOS=1
+PAGE=1
+while (( $NEW_NUM_REPOS > 0 )); do
+    curl -s -u "$GITHUB_USERID":"$GITHUB_ACCESS_TOKEN" "https://api.github.com/user/repos?affiliation=collaborator&per_page=100&page=$PAGE" >> $REPOS
+    OLD_NUM_REPOS=$NUM_REPOS
+    NUM_REPOS=$(jq '.[].repository.name' < $REPOS | wc -l)
+    let NEW_NUM_REPOS=(NUM_REPOS - OLD_NUM_REPOS)
+    echo "Found $NEW_NUM_REPOS more repos"
+    let PAGE++
+done
+
+echo "Repos matching $NAME:"
+
+for r in $(jq -r ".[].full_name | select(contains(\"$NAME\"))" < $REPOS); do
+    echo $r
+    u=$(echo $r | cut -d/ -f1)
+    echo $u
+    if [ -d "$u" ]; then
+	echo "$u exists in current directory, pulling instead"
+	pushd "$u"
+	git pull
+	popd
+    else
+	git clone git@github.com:"$r" "$u"
+    fi
+done
+
+rm /tmp/*$$*

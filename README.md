@@ -1,6 +1,7 @@
 # GitHub Utilities for Education
 
-Purpose:
+The purpose of these utilities is to handle some use cases commonly
+encountered in the education environment, initially:
 
 - accept pending invites
 - list or clone matching repos into directories named by userid 

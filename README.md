@@ -8,4 +8,11 @@
 - bash
 - curl
 - jq
-- GitHub access token either in `GITHUB_ACCESS_TOKEN` environment variable
+- GitHub userid in `GITHUB_USERID` environment variable
+- GitHub access token in `GITHUB_ACCESS_TOKEN` environment variable
+
+# Usage
+
+To accept pending invites:
+
+    $ ./ghai

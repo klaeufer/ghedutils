@@ -16,3 +16,7 @@
 To accept pending invites:
 
     $ ./ghai
+
+# References
+
+- http://tldp.org/LDP/Bash-Beginners-Guide/html

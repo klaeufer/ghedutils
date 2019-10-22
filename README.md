@@ -1,7 +1,11 @@
 # GitHub Utilities for Education
 
+Purpose:
+
 - accept pending invites
 - clone matching repos into directories named by userid
+
+*This is a work in progress.*
 
 # Prerequisites
 

@@ -3,7 +3,7 @@
 Purpose:
 
 - accept pending invites
-- clone matching repos into directories named by userid
+- list or clone matching repos into directories named by userid 
 
 *This is a work in progress.*
 
@@ -20,6 +20,11 @@ Purpose:
 To accept pending invites:
 
     $ ./ghai
+
+To clone and/or pull matching repositories into current directory
+(based on simple substring matching):
+
+    $ ./ghcm <name>
 
 # References
 

@@ -26,7 +26,7 @@ PAGE=1
 while (( $NEW_NUM_REPOS > 0 )); do
     curl -s -u "$GITHUB_USERID":"$GITHUB_ACCESS_TOKEN" "https://api.github.com/user/repos?affiliation=collaborator&per_page=100&page=$PAGE" >> $REPOS
     OLD_NUM_REPOS=$NUM_REPOS
-    NUM_REPOS=$(jq '.[].repository.name' < $REPOS | wc -l)
+    NUM_REPOS=$(jq -r '.[].full_name' < $REPOS | wc -l)
     let NEW_NUM_REPOS=(NUM_REPOS - OLD_NUM_REPOS)
     echo "Found $NEW_NUM_REPOS more repos"
     let PAGE++
@@ -37,14 +37,13 @@ echo "Repos matching $NAME:"
 for r in $(jq -r ".[].full_name | select(contains(\"$NAME\"))" < $REPOS); do
     echo $r
     u=$(echo $r | cut -d/ -f1)
-    echo $u
     if [ -d "$u" ]; then
-	echo "$u exists in current directory, pulling instead"
-	pushd "$u"
-	git pull
-	popd
+	      echo "$u exists in current directory, pulling instead"
+	      pushd "$u"
+	      git pull
+	      popd
     else
-	git clone git@github.com:"$r" "$u"
+	      git clone git@github.com:"$r" "$u"
     fi
 done
 

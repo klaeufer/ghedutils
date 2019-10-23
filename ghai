@@ -16,18 +16,18 @@ INVITES=/tmp/invites$$.txt
 NUM_INVITES=1
 while (( $NUM_INVITES > 0 )); do
     curl -s -u "$GITHUB_USERID":"$GITHUB_ACCESS_TOKEN" "https://api.github.com/user/repository_invitations?per_page=100" > $INVITES
-    NUM_INVITES=$(jq '.[].repository.name' < $INVITES | wc -l)
+    NUM_INVITES=$(jq -r '.[].repository.full_name' < $INVITES | tee /dev/tty | wc -l)
     echo "Found $NUM_INVITES more invites"
 
     for id in $(jq '.[].id' < $INVITES); do
-	echo -n "Attempting to accept invitation $id..."
-	STATUS=$(curl -s -i -u "$GITHUB_USERID":"$GITHUB_ACCESS_TOKEN" -X PATCH "https://api.github.com/user/repository_invitations/$id" | grep "Status:")
-	echo "$STATUS" | grep 204 > /dev/null
-	if [ $? -eq 0 ]; then
+	      echo -n "Attempting to accept invitation $id..."
+	      STATUS=$(curl -s -i -u "$GITHUB_USERID":"$GITHUB_ACCESS_TOKEN" -X PATCH "https://api.github.com/user/repository_invitations/$id" | grep "Status:")
+	      echo "$STATUS" | grep 204 > /dev/null
+	      if [ $? -eq 0 ]; then
             echo OK
-	else
+	      else
             echo FAIL
-	fi
+	      fi
     done
 done
 

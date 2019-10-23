@@ -10,22 +10,28 @@ encountered in the education environment, initially:
 
 # Prerequisites
 
+- Linux or Mac OS
 - bash
 - curl
 - jq
 - GitHub userid in `GITHUB_USERID` environment variable
 - GitHub access token in `GITHUB_ACCESS_TOKEN` environment variable
 
+# Installation
+
+    $ [ -x ~/bin ] || mkdir ~/bin
+    $ git clone https://github.com/klaeufer/ghedutils ~/bin/ghedutils
+
 # Usage
 
 To accept pending invites:
 
-    $ ./ghai
+    $ ~/bin/ghedutils/ghai
 
 To clone and/or pull matching repositories into current directory
 (based on simple substring matching):
 
-    $ ./ghcm <name>
+    $ ~/bin/ghedutils/ghcm <name>
 
 # References
 

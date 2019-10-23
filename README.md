@@ -27,6 +27,10 @@ encountered in the education environment, initially:
 To accept pending invites:
 
     $ ~/bin/ghedutils/ghai
+    Found 2 more invites
+    Attempting to accept invitation 20284333...OK
+    Attempting to accept invitation 20286666...OK
+    Found 0 more invites
 
 To clone and/or pull matching repositories into current directory
 (based on simple substring matching):

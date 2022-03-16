@@ -1,3 +1,5 @@
+*This work has been superseded by GitHub Classroom. I'm keeping it around as a course example.*
+
 # GitHub Utilities for Education
 
 The purpose of these utilities is to handle some use cases commonly
